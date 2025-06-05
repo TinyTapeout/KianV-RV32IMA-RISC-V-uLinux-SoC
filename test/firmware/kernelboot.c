@@ -19,12 +19,14 @@
 #define GPIO_UO_OUT (GPIO_BASE + 0x0004)
 #define GPIO_UI_IN (GPIO_BASE + 0x0008)
 #define MTIME (*((volatile uint64_t *)0x11004000))
+#define RAM_HIGH 0x80800000
 
 volatile char *uart_tx = (char *)UART_TX, *uart_rx = (char *)UART_RX,
               *uart_lsr = (char *)UART_LSR;
 volatile char *gpio_uo_en = (char *)GPIO_UO_EN,
               *gpio_uo_out = (char *)GPIO_UO_OUT,
               *gpio_ui_in = (char *)GPIO_UI_IN;
+volatile uint32_t *ram_high = (uint32_t *)RAM_HIGH;
 volatile atomic_uint interrupt_occurred = ATOMIC_VAR_INIT(0);
 
 void uart_putc(char c) {
@@ -108,6 +110,20 @@ uint8_t SPI_transfer(char tx) {
   return rx;
 }
 
+uint8_t test_ram_high() {
+  *ram_high = 0x12345678;
+  if (*ram_high != 0x12345678) {
+    return 0;
+  }
+
+  *ram_high = 0x87654321;
+  if (*ram_high != 0x87654321) {
+    return 0;
+  }
+
+  return 1;
+}
+
 #define CS_ENABLE() spi_set_cs(1)
 #define CS_DISABLE() spi_set_cs(0)
 
@@ -118,6 +134,13 @@ int main() {
   *mtimecmp = *mtime + interval;
   uint32_t *spi_div = (volatile uint32_t *)SPI_DIV;
   enable_interrupts();
+
+  // Test High RAM
+  if (!test_ram_high()) {
+    uart_putc('E');
+    uart_putc('!');
+    return 1;
+  }
 
   // Test GPIO (only if test_sel is set)
   if (*gpio_ui_in & 1) {

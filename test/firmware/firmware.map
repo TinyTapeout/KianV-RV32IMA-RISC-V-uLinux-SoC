@@ -50,10 +50,10 @@ LOAD /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-
  *(.init_array)
  *(.gcc_except_table*)
 
-.text           0x2010008c      0x434
+.text           0x2010008c      0x49c
                 0x2010008c                        . = ALIGN (0x4)
  *(.text)
- .text          0x2010008c      0x198 kernelboot.o
+ .text          0x2010008c      0x1dc kernelboot.o
                 0x2010008c                uart_putc
                 0x201000b0                uart_getc
                 0x201000d4                uart_puthex_byte
@@ -61,24 +61,25 @@ LOAD /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-
                 0x20100188                setup_timer_interrupt
                 0x20100198                timer_interrupt_handler
                 0x201001f4                SPI_transfer
- .text          0x20100224       0xe8 /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a(libc_a-memcpy.o)
-                0x20100224                memcpy
+                0x20100224                test_ram_high
+ .text          0x20100268       0xe8 /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a(libc_a-memcpy.o)
+                0x20100268                memcpy
  *(.text*)
- .text.startup  0x2010030c      0x194 kernelboot.o
-                0x2010030c                main
-                0x201004a0                        . = ALIGN (0x4)
+ .text.startup  0x20100350      0x1b8 kernelboot.o
+                0x20100350                main
+                0x20100508                        . = ALIGN (0x4)
  *(.rodata)
  *(.rodata*)
  .rodata.str1.4
-                0x201004a0       0x20 kernelboot.o
-                0x201004c0                        . = ALIGN (0x4)
-                0x201004c0                        _etext = .
-                0x201004c0                        _sidata = _etext
+                0x20100508       0x20 kernelboot.o
+                0x20100528                        . = ALIGN (0x4)
+                0x20100528                        _etext = .
+                0x20100528                        _sidata = _etext
 
-.rela.dyn       0x201004c0        0x0
- .rela.text     0x201004c0        0x0 crt0.o
+.rela.dyn       0x20100528        0x0
+ .rela.text     0x20100528        0x0 crt0.o
 
-.data           0x807f8000       0x20 load address 0x201004c0
+.data           0x807f8000       0x24 load address 0x20100528
                 0x807f8000                        . = ALIGN (0x4)
                 0x807f8000                        _sdata = .
                 0x807f8000                        _ram_start = .
@@ -91,38 +92,39 @@ LOAD /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-
  .data          0x807f8000        0x0 /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a(libc_a-memcpy.o)
  *(.data*)
  *(.sdata)
- .sdata         0x807f8000       0x20 kernelboot.o
+ .sdata         0x807f8000       0x24 kernelboot.o
                 0x807f8000                spi
-                0x807f8008                gpio_ui_in
-                0x807f800c                gpio_uo_out
-                0x807f8010                gpio_uo_en
-                0x807f8014                uart_lsr
-                0x807f8018                uart_rx
-                0x807f801c                uart_tx
+                0x807f8008                ram_high
+                0x807f800c                gpio_ui_in
+                0x807f8010                gpio_uo_out
+                0x807f8014                gpio_uo_en
+                0x807f8018                uart_lsr
+                0x807f801c                uart_rx
+                0x807f8020                uart_tx
  *(.sdata*)
-                0x807f8020                        . = ALIGN (0x4)
-                0x807f8020                        _edata = .
+                0x807f8024                        . = ALIGN (0x4)
+                0x807f8024                        _edata = .
 
-.bss            0x807f8020        0x4 load address 0x201004e0
-                0x807f8020                        . = ALIGN (0x4)
-                0x807f8020                        _sbss = .
+.bss            0x807f8024        0x4 load address 0x2010054c
+                0x807f8024                        . = ALIGN (0x4)
+                0x807f8024                        _sbss = .
  *(.bss)
- .bss           0x807f8020        0x0 crt0.o
- .bss           0x807f8020        0x0 kernelboot.o
- .bss           0x807f8020        0x0 /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a(libc_a-memcpy.o)
+ .bss           0x807f8024        0x0 crt0.o
+ .bss           0x807f8024        0x0 kernelboot.o
+ .bss           0x807f8024        0x0 /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a(libc_a-memcpy.o)
  *(.bss*)
  *(.sbss)
- .sbss          0x807f8020        0x4 kernelboot.o
-                0x807f8020                interrupt_occurred
+ .sbss          0x807f8024        0x4 kernelboot.o
+                0x807f8024                interrupt_occurred
  *(.sbss*)
  *(COMMON)
-                0x807f8024                        . = ALIGN (0x4)
-                0x807f8024                        _ebss = .
+                0x807f8028                        . = ALIGN (0x4)
+                0x807f8028                        _ebss = .
 
-.heap           0x807f8024        0x0
-                0x807f8024                        . = ALIGN (0x4)
-                0x807f8024                        _heap_start = .
-                0x807f8024                        _end = .
+.heap           0x807f8028        0x0
+                0x807f8028                        . = ALIGN (0x4)
+                0x807f8028                        _heap_start = .
+                0x807f8028                        _end = .
 OUTPUT(firmware.elf elf32-littleriscv)
 
 .riscv.attributes
