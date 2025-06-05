@@ -62,13 +62,26 @@ void setup_timer_interrupt() {
 }
 
 __attribute__((naked)) void timer_interrupt_handler(void) {
-  asm volatile("addi sp, sp, -124; sw x1, 4(sp); sw x2, 8(sp); /* ... */ sw "
-               "x31, 124(sp)");
+  asm volatile(
+    "addi sp, sp, -24\n"
+    "sw x1, 4(sp)\n"
+    "sw x2, 8(sp)\n"
+    "sw t0, 12(sp)\n"
+    "sw a4, 16(sp)\n"
+    "sw a5, 20(sp)\n"
+  );
   asm volatile("csrrc t0, mstatus, %0" : : "r"((uint32_t)(1 << 7)) : "t0");
-  asm volatile("csrc mstatus, %0" ::"r"((uint32_t)(1 << 3)));
+  asm volatile("csrc mstatus, %0" ::"r"((uint32_t)(1 << 3)) : "t0");
   atomic_store(&interrupt_occurred, 1);
-  asm volatile("lw x1, 4(sp); lw x2, 8(sp); /* ... */ lw x31, 124(sp); addi "
-               "sp, sp, 124; mret");
+  asm volatile(
+    "lw x1, 4(sp)\n"
+    "lw x2, 8(sp)\n"
+    "lw t0, 12(sp)\n"
+    "lw a4, 16(sp)\n"
+    "lw a5, 20(sp)\n"
+    "addi sp, sp, 24\n"
+    "mret\n"
+  );
 }
 
 struct spi_regs {

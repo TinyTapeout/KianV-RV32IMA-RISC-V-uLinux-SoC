@@ -50,35 +50,35 @@ LOAD /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-
  *(.init_array)
  *(.gcc_except_table*)
 
-.text           0x2010008c      0x420
+.text           0x2010008c      0x430
                 0x2010008c                        . = ALIGN (0x4)
  *(.text)
- .text          0x2010008c      0x188 kernelboot.o
+ .text          0x2010008c      0x198 kernelboot.o
                 0x2010008c                uart_putc
                 0x201000b0                uart_getc
                 0x201000d4                uart_puthex_byte
                 0x20100138                uart_puthex
                 0x20100188                setup_timer_interrupt
                 0x20100198                timer_interrupt_handler
-                0x201001e4                SPI_transfer
- .text          0x20100214       0xe8 /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a(libc_a-memcpy.o)
-                0x20100214                memcpy
+                0x201001f4                SPI_transfer
+ .text          0x20100224       0xe8 /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a(libc_a-memcpy.o)
+                0x20100224                memcpy
  *(.text*)
- .text.startup  0x201002fc      0x190 kernelboot.o
-                0x201002fc                main
-                0x2010048c                        . = ALIGN (0x4)
+ .text.startup  0x2010030c      0x190 kernelboot.o
+                0x2010030c                main
+                0x2010049c                        . = ALIGN (0x4)
  *(.rodata)
  *(.rodata*)
  .rodata.str1.4
-                0x2010048c       0x20 kernelboot.o
-                0x201004ac                        . = ALIGN (0x4)
-                0x201004ac                        _etext = .
-                0x201004ac                        _sidata = _etext
+                0x2010049c       0x20 kernelboot.o
+                0x201004bc                        . = ALIGN (0x4)
+                0x201004bc                        _etext = .
+                0x201004bc                        _sidata = _etext
 
-.rela.dyn       0x201004ac        0x0
- .rela.text     0x201004ac        0x0 crt0.o
+.rela.dyn       0x201004bc        0x0
+ .rela.text     0x201004bc        0x0 crt0.o
 
-.data           0x807f8000       0x1c load address 0x201004ac
+.data           0x807f8000       0x1c load address 0x201004bc
                 0x807f8000                        . = ALIGN (0x4)
                 0x807f8000                        _sdata = .
                 0x807f8000                        _ram_start = .
@@ -102,7 +102,7 @@ LOAD /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-
                 0x807f801c                        . = ALIGN (0x4)
                 0x807f801c                        _edata = .
 
-.bss            0x807f801c        0x4 load address 0x201004c8
+.bss            0x807f801c        0x4 load address 0x201004d8
                 0x807f801c                        . = ALIGN (0x4)
                 0x807f801c                        _sbss = .
  *(.bss)
