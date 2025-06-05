@@ -21,6 +21,10 @@ module tb ();
   wire [7:0] uo_out;
   wire [7:0] uio_out;
   wire [7:0] uio_oe;
+`ifdef GL_TEST
+  wire VPWR = 1'b1;
+  wire VGND = 1'b0;
+`endif
 
   reg spi_sio1_so_miso0;
   reg uart_rx;
@@ -34,8 +38,8 @@ module tb ();
   tt_um_kianV_rv32ima_uLinux_SoC tt_um_kianV_rv32ima_uLinux_SoC_I (
       // include power ports for the Gate Level test
 `ifdef GL_TEST
-      .VPWR   (1'b1),
-      .VGND   (1'b0),
+      .VPWR(VPWR),
+      .VGND(VGND),
 `endif
       .ui_in  (ui_in),    // Dedicated inputs
       .uo_out (uo_out),   // Dedicated outputs
