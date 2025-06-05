@@ -81,7 +81,7 @@ pinout:
   uio[4]: "sd2"
   uio[5]: "sd3"
   uio[6]: "cs1 psram"
-  uio[7]: "always high"
+  uio[7]: "cs2 psram"
 
 # Do not change!
 yaml_version: 6

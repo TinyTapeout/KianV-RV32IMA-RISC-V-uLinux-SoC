@@ -1,6 +1,6 @@
 ## How it works
 
-32-bit RISC-V IMA processor, capable of booting Linux. Features 16 MiB of external SPI flash memory, 8 MiB of external PSRAM, a UART peripheral, and a SPI peripheral.
+32-bit RISC-V IMA processor, capable of booting Linux. Features 16 MiB of external SPI flash memory, 16 MiB of external PSRAM (8 MiB per bank), a UART peripheral, and a SPI peripheral.
 
 ## System Memory Map
 
@@ -12,7 +12,7 @@ The system memory map is as follows:
 | 0x10500000 | 0x14   | SPI Peripheral       |
 | 0x11100000 | 0x04   | Reset / HALT control |
 | 0x20000000 | 16 MiB | SPI Flash            |
-| 0x80000000 | 8 MiB  | PSRAM                |
+| 0x80000000 | 16 MiB | PSRAM                |
 
 The system boots from the SPI flash memory. After reset, the CPU starts executing code from 0x20100000 (corresponding to the offset 0x100000 into the SPI flash memory), where the bootloader is expected to be.
 

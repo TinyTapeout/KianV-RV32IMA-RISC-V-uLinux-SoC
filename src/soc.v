@@ -163,9 +163,13 @@ module soc (
 
   // PSRAM
   wire mem_sdram_valid;
+  wire mem_sdram_low_bank_sel;
+  wire mem_sdram_high_bank_sel;
 
   wire is_sdram = (cpu_mem_addr >= `SDRAM_MEM_ADDR_START && cpu_mem_addr < `SDRAM_MEM_ADDR_END);
   assign mem_sdram_valid = !qqspi_mem_ready && cpu_mem_valid && is_sdram;
+  assign mem_sdram_low_bank_sel = (is_sdram && cpu_mem_addr < `SDRAM_MEM_ADDR_START + `SDRAM_BANK_SIZE);
+  assign mem_sdram_high_bank_sel = (is_sdram && ~mem_sdram_low_bank_sel);
 
   /////////////////////////////////////////////////////////////////////////////
 
@@ -196,7 +200,7 @@ module soc (
       .sio3_o        (sio3_o),
       .sio_oe        (sio_oe),
 
-      .ce_ctrl({1'b0, mem_sdram_valid, spi_nor_mem_valid}),
+      .ce_ctrl({mem_sdram_valid & mem_sdram_high_bank_sel, mem_sdram_valid & mem_sdram_low_bank_sel, spi_nor_mem_valid}),
       .ce(ce),
 
       .clk   (clk),
