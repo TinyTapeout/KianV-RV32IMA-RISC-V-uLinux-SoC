@@ -17,42 +17,56 @@
  *
  */
 
+`include "defines_soc.vh"
+
 `default_nettype none
 module gpio (
     input wire clk,
     input wire resetn,
 
-    input wire [7:0] ui_in,
-    output reg [7:0] uo_out,
-    output reg [7:0] uo_en,
+    input  wire [7:0] ui_in,
+    output reg  [7:0] uo_out,
+    output reg  [7:0] uo_en,
 
-    input wire ctrl,  /* 0: data, 1: uo_en */
+    input wire [31:0] addr,
     output reg [31:0] rdata,
     input wire [31:0] wdata,
     input wire [3:0] wstrb,
     input wire valid,
     output reg ready
 );
-
+  wire wr = valid && wstrb[0];
 
   always @(posedge clk) begin
     if (!resetn) begin
       uo_out <= 8'b0;
-      uo_en <= 8'b0;
-      rdata <= 32'b0;
+      uo_en  <= 8'b0;
+      rdata  <= 32'b0;
     end else begin
       ready <= 1'b0;
+
       if (valid) begin
-        if (wstrb[0]) begin
-          if (ctrl) begin
-            uo_en <= wdata[7:0];
-          end else begin
-            uo_out <= wdata[7:0];
+        case (addr)
+          `KIANV_GPIO_UO_EN: begin
+            if (wr) uo_en <= wdata[7:0];
+            else rdata <= {24'b0, uo_en};
           end
-        end
+
+          `KIANV_GPIO_UO_OUT: begin
+            if (wr) uo_out <= wdata[7:0];
+            else rdata <= {24'b0, uo_out};
+          end
+
+          `KIANV_GPIO_UI_IN: begin
+            if (!wr) rdata <= {24'b0, ui_in};
+          end
+
+          default: begin
+            rdata <= 32'b0;
+          end
+        endcase
 
         ready <= 1'b1;
-        rdata <= {24'b0, ctrl ? uo_en : ui_in};
       end
     end
   end

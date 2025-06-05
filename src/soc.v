@@ -299,11 +299,11 @@ module soc (
   // GPIO
 
   assign gpio_mem_valid0 = !gpio_mem_ready0 && cpu_mem_valid &&
-           (cpu_mem_addr == `KIANV_GPIO_DATA_ADDR || cpu_mem_addr == `KIANV_GPIO_UO_EN_ADDR);
+           (cpu_mem_addr == `KIANV_GPIO_UO_EN || cpu_mem_addr == `KIANV_GPIO_UO_OUT || cpu_mem_addr == `KIANV_GPIO_UI_IN);
   gpio gpio0_I (
       .clk   (clk),
       .resetn(resetn),
-      .ctrl  (cpu_mem_addr[2]),
+      .addr  (cpu_mem_addr),
       .rdata (gpio_mem_data0),
       .wdata (cpu_mem_wdata),
       .wstrb (cpu_mem_wstrb),

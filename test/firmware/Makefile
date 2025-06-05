@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: © 2023 Uri Shaked   <uri@wokwi.com>
 #                           2023 Hirosh Dabui <hirosh@dabui.de>
 # SPDX-License-Identifier: MIT
-TOOLCHAIN_PREFIX ?= riscv32-unknown-elf
+TOOLCHAIN_PREFIX ?= riscv32-esp-elf
 
 LDS_FILE ?= kianv.ld
 START_FILE = crt0.S
@@ -11,7 +11,7 @@ OPT_LEVEL ?= -Os
 FILEwoSUFFIX = $(basename $(FILE))
 RVCPPFLAGS = -fno-exceptions -fno-enforce-eh-specs
 RVLDFLAGS = -Wl,-melf32lriscv -Wl,-belf32-littleriscv -Wl,--no-relax
-RVCFLAGS = -fno-pic -march=rv32ima -mabi=ilp32  -fno-stack-protector -w -Wl,--no-relax -ffreestanding -Wl,--strip-debug,-Map=firmware.map -nostartfiles
+RVCFLAGS = -fno-pic -march=rv32ima_zicsr_zifencei -mabi=ilp32  -fno-stack-protector -w -Wl,--no-relax -ffreestanding -Wl,--strip-debug,-Map=firmware.map -nostartfiles
 
 all: firmware.hex
 

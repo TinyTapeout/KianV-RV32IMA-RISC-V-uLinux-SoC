@@ -15,14 +15,16 @@
 #define LSR_TEMT 0x40
 #define LSR_DR 0x01
 #define GPIO_BASE 0x10600000
-#define GPIO_DATA (GPIO_BASE + 0x0000)
-#define GPIO_UO_EN (GPIO_BASE + 0x0004)
+#define GPIO_UO_EN (GPIO_BASE + 0x0000)
+#define GPIO_UO_OUT (GPIO_BASE + 0x0004)
+#define GPIO_UI_IN (GPIO_BASE + 0x0008)
 #define MTIME (*((volatile uint64_t *)0x11004000))
 
 volatile char *uart_tx = (char *)UART_TX, *uart_rx = (char *)UART_RX,
               *uart_lsr = (char *)UART_LSR;
-volatile char *gpio_data = (char *)GPIO_DATA,
-              *gpio_uo_en = (char *)GPIO_UO_EN;
+volatile char *gpio_uo_en = (char *)GPIO_UO_EN,
+              *gpio_uo_out = (char *)GPIO_UO_OUT,
+              *gpio_ui_in = (char *)GPIO_UI_IN;
 volatile atomic_uint interrupt_occurred = ATOMIC_VAR_INIT(0);
 
 void uart_putc(char c) {
@@ -118,15 +120,15 @@ int main() {
   enable_interrupts();
 
   // Test GPIO (only if test_sel is set)
-  if ((*gpio_data & 1)) {
+  if (*gpio_ui_in & 1) {
      *gpio_uo_en = 0xff;
-     *gpio_data = 0x80; // Start of test marker
-     *gpio_data = 0x00;
-     *gpio_data = 0x85;
-     *gpio_data = 0x12;
-     *gpio_data = 0x94;
-     *gpio_data = 0x17;
-     *gpio_data = 0x80; // End of test marker
+     *gpio_uo_out = 0x80; // Start of test marker
+     *gpio_uo_out = 0x00;
+     *gpio_uo_out = 0x85;
+     *gpio_uo_out = 0x12;
+     *gpio_uo_out = 0x94;
+     *gpio_uo_out = 0x17;
+     *gpio_uo_out = 0x80; // End of test marker
      *gpio_uo_en = 0;
   }
 

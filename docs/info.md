@@ -10,7 +10,7 @@ The system memory map is as follows:
 | ---------- | ------ | -------------------- |
 | 0x10000000 | 0x14   | UART Peripheral      |
 | 0x10500000 | 0x14   | SPI Peripheral       |
-| 0x10600000 | 0x08   | GPIO Peripheral      |
+| 0x10600000 | 0x0c   | GPIO Peripheral      |
 | 0x11100000 | 0x04   | Reset / HALT control |
 | 0x20000000 | 16 MiB | SPI Flash            |
 | 0x80000000 | 16 MiB | PSRAM                |
@@ -35,10 +35,11 @@ The system boots from the SPI flash memory. After reset, the CPU starts executin
 
 ### GPIO Peripheral registers
 
-| Address    | Name       | Description                            |
-|------------|------------|----------------------------------------|
-| 0x10600000 | GPIO_DATA  | GPIO Data (read: ui_in, write: uo_out) |
-| 0x10600004 | GPIO_UO_EN | Enable bits for uo_out                 |
+| Address    | Name        | Description                     |
+|------------|-------------|---------------------------------|
+| 0x10600000 | GPIO_UO_EN  | Enable bits for uo_out pins     |
+| 0x10600004 | GPIO_UO_OUT | Write to uo_out pins            |
+| 0x10600008 | GPIO_UI_IN  | Read from ui_in pins(read-only) |
 
 ### CPU control register
 
