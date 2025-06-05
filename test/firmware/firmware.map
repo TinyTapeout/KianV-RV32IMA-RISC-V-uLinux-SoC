@@ -1,124 +1,146 @@
 Archive member included to satisfy reference by file (symbol)
 
-/opt/riscv32im/lib/gcc/riscv32-unknown-elf/11.1.0/../../../../riscv32-unknown-elf/lib/libc.a(lib_a-memcpy.o)
+/home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a(libc_a-memcpy.o)
                               kernelboot.o (memcpy)
+
+Discarded input sections
+
+ .debug_info    0x00000000      0x256 /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a(libc_a-memcpy.o)
+ .debug_abbrev  0x00000000      0x107 /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a(libc_a-memcpy.o)
+ .debug_loclists
+                0x00000000      0x1d6 /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a(libc_a-memcpy.o)
+ .debug_aranges
+                0x00000000       0x20 /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a(libc_a-memcpy.o)
+ .debug_line    0x00000000      0x31c /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a(libc_a-memcpy.o)
+ .debug_str     0x00000000      0x12c /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a(libc_a-memcpy.o)
+ .debug_line_str
+                0x00000000      0x2f4 /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a(libc_a-memcpy.o)
+ .debug_frame   0x00000000       0x20 /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a(libc_a-memcpy.o)
 
 Memory Configuration
 
 Name             Origin             Length             Attributes
-FLASH            0x0000000020100000 0x0000000010000000 xr
-BRAM             0x00000000807f8000 0x0000000000008000 xrw
-*default*        0x0000000000000000 0xffffffffffffffff
+FLASH            0x20100000         0x10000000         xr
+BRAM             0x807f8000         0x00008000         xrw
+*default*        0x00000000         0xffffffff
 
 Linker script and memory map
 
 TARGET(elf32-littleriscv)
 LOAD crt0.o
 LOAD kernelboot.o
-LOAD /opt/riscv32im/lib/gcc/riscv32-unknown-elf/11.1.0/../../../../riscv32-unknown-elf/lib/libc.a
-LOAD /opt/riscv32im/lib/gcc/riscv32-unknown-elf/11.1.0/../../../../riscv32-unknown-elf/lib/libm.a
-LOAD /opt/riscv32im/lib/gcc/riscv32-unknown-elf/11.1.0/libgcc.a
-LOAD /opt/riscv32im/lib/gcc/riscv32-unknown-elf/11.1.0/libgcc.a
-START GROUP
-LOAD /opt/riscv32im/lib/gcc/riscv32-unknown-elf/11.1.0/../../../../riscv32-unknown-elf/lib/libc.a
-LOAD /opt/riscv32im/lib/gcc/riscv32-unknown-elf/11.1.0/../../../../riscv32-unknown-elf/lib/libgloss.a
-END GROUP
-LOAD /opt/riscv32im/lib/gcc/riscv32-unknown-elf/11.1.0/libgcc.a
-                0x0000000080800000                __stacktop = (ORIGIN (BRAM) + LENGTH (BRAM))
+LOAD /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a
+LOAD /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libm.a
+LOAD /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/libgcc.a
+LOAD /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/libgcc.a
+LOAD /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a
+LOAD /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libnosys.a
+LOAD /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a
+LOAD /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/libgcc.a
+                0x80800000                        __stacktop = (ORIGIN (BRAM) + LENGTH (BRAM))
 
-.misc           0x0000000020100000       0x8c
-                0x0000000020100000                . = ALIGN (0x4)
+.misc           0x20100000       0x8c
+                0x20100000                        . = ALIGN (0x4)
  crt0.o(.text)
- .text          0x0000000020100000       0x8c crt0.o
-                0x0000000020100000                _start
-                0x000000002010008c                . = ALIGN (0x4)
+ .text          0x20100000       0x8c crt0.o
+                0x20100000                _start
+                0x2010008c                        . = ALIGN (0x4)
  *(.eh_frame)
  *(.eh_frame_hdr)
  *(.init_array)
  *(.gcc_except_table*)
 
-.text           0x000000002010008c      0x3e0
-                0x000000002010008c                . = ALIGN (0x4)
+.text           0x2010008c      0x420
+                0x2010008c                        . = ALIGN (0x4)
  *(.text)
- .text          0x000000002010008c      0x184 kernelboot.o
-                0x000000002010008c                uart_putc
-                0x00000000201000b0                uart_getc
-                0x00000000201000d4                uart_puthex_byte
-                0x0000000020100138                uart_puthex
-                0x0000000020100188                setup_timer_interrupt
-                0x0000000020100198                timer_interrupt_handler
-                0x00000000201001e0                SPI_transfer
- .text          0x0000000020100210      0x128 /opt/riscv32im/lib/gcc/riscv32-unknown-elf/11.1.0/../../../../riscv32-unknown-elf/lib/libc.a(lib_a-memcpy.o)
-                0x0000000020100210                memcpy
+ .text          0x2010008c      0x188 kernelboot.o
+                0x2010008c                uart_putc
+                0x201000b0                uart_getc
+                0x201000d4                uart_puthex_byte
+                0x20100138                uart_puthex
+                0x20100188                setup_timer_interrupt
+                0x20100198                timer_interrupt_handler
+                0x201001e4                SPI_transfer
+ .text          0x20100214       0xe8 /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a(libc_a-memcpy.o)
+                0x20100214                memcpy
  *(.text*)
- .text.startup  0x0000000020100338      0x114 kernelboot.o
-                0x0000000020100338                main
-                0x000000002010044c                . = ALIGN (0x4)
+ .text.startup  0x201002fc      0x190 kernelboot.o
+                0x201002fc                main
+                0x2010048c                        . = ALIGN (0x4)
  *(.rodata)
  *(.rodata*)
  .rodata.str1.4
-                0x000000002010044c       0x20 kernelboot.o
-                0x000000002010046c                . = ALIGN (0x4)
-                0x000000002010046c                _etext = .
-                0x000000002010046c                _sidata = _etext
+                0x2010048c       0x20 kernelboot.o
+                0x201004ac                        . = ALIGN (0x4)
+                0x201004ac                        _etext = .
+                0x201004ac                        _sidata = _etext
 
-.rela.dyn       0x000000002010046c        0x0
- .rela.text     0x000000002010046c        0x0 crt0.o
+.rela.dyn       0x201004ac        0x0
+ .rela.text     0x201004ac        0x0 crt0.o
 
-.data           0x00000000807f8000       0x14 load address 0x000000002010046c
-                0x00000000807f8000                . = ALIGN (0x4)
-                0x00000000807f8000                _sdata = .
-                0x00000000807f8000                _ram_start = .
+.data           0x807f8000       0x1c load address 0x201004ac
+                0x807f8000                        . = ALIGN (0x4)
+                0x807f8000                        _sdata = .
+                0x807f8000                        _ram_start = .
  *(.text)
  *(.text*)
-                0x00000000807f8000                . = ALIGN (0x4)
+                0x807f8000                        . = ALIGN (0x4)
  *(.data)
- .data          0x00000000807f8000        0x0 crt0.o
- .data          0x00000000807f8000        0x0 kernelboot.o
- .data          0x00000000807f8000        0x0 /opt/riscv32im/lib/gcc/riscv32-unknown-elf/11.1.0/../../../../riscv32-unknown-elf/lib/libc.a(lib_a-memcpy.o)
+ .data          0x807f8000        0x0 crt0.o
+ .data          0x807f8000        0x0 kernelboot.o
+ .data          0x807f8000        0x0 /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a(libc_a-memcpy.o)
  *(.data*)
  *(.sdata)
- .sdata         0x00000000807f8000       0x14 kernelboot.o
-                0x00000000807f8000                spi
-                0x00000000807f8008                uart_lsr
-                0x00000000807f800c                uart_rx
-                0x00000000807f8010                uart_tx
+ .sdata         0x807f8000       0x1c kernelboot.o
+                0x807f8000                spi
+                0x807f8008                gpio_uo_en
+                0x807f800c                gpio_data
+                0x807f8010                uart_lsr
+                0x807f8014                uart_rx
+                0x807f8018                uart_tx
  *(.sdata*)
-                0x00000000807f8014                . = ALIGN (0x4)
-                0x00000000807f8014                _edata = .
+                0x807f801c                        . = ALIGN (0x4)
+                0x807f801c                        _edata = .
 
-.bss            0x00000000807f8014        0x4 load address 0x0000000020100480
-                0x00000000807f8014                . = ALIGN (0x4)
-                0x00000000807f8014                _sbss = .
+.bss            0x807f801c        0x4 load address 0x201004c8
+                0x807f801c                        . = ALIGN (0x4)
+                0x807f801c                        _sbss = .
  *(.bss)
- .bss           0x00000000807f8014        0x0 crt0.o
- .bss           0x00000000807f8014        0x0 kernelboot.o
- .bss           0x00000000807f8014        0x0 /opt/riscv32im/lib/gcc/riscv32-unknown-elf/11.1.0/../../../../riscv32-unknown-elf/lib/libc.a(lib_a-memcpy.o)
+ .bss           0x807f801c        0x0 crt0.o
+ .bss           0x807f801c        0x0 kernelboot.o
+ .bss           0x807f801c        0x0 /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a(libc_a-memcpy.o)
  *(.bss*)
  *(.sbss)
- .sbss          0x00000000807f8014        0x4 kernelboot.o
-                0x00000000807f8014                interrupt_occurred
+ .sbss          0x807f801c        0x4 kernelboot.o
+                0x807f801c                interrupt_occurred
  *(.sbss*)
  *(COMMON)
-                0x00000000807f8018                . = ALIGN (0x4)
-                0x00000000807f8018                _ebss = .
+                0x807f8020                        . = ALIGN (0x4)
+                0x807f8020                        _ebss = .
 
-.heap           0x00000000807f8018        0x0
-                0x00000000807f8018                . = ALIGN (0x4)
-                0x00000000807f8018                _heap_start = .
-                0x00000000807f8018                _end = .
+.heap           0x807f8020        0x0
+                0x807f8020                        . = ALIGN (0x4)
+                0x807f8020                        _heap_start = .
+                0x807f8020                        _end = .
 OUTPUT(firmware.elf elf32-littleriscv)
 
 .riscv.attributes
-                0x0000000000000000       0x2a
+                0x00000000       0x6a
  .riscv.attributes
-                0x0000000000000000       0x28 crt0.o
+                0x00000000       0x59 crt0.o
  .riscv.attributes
-                0x0000000000000028       0x2a kernelboot.o
+                0x00000059       0x5b kernelboot.o
  .riscv.attributes
-                0x0000000000000052       0x21 /opt/riscv32im/lib/gcc/riscv32-unknown-elf/11.1.0/../../../../riscv32-unknown-elf/lib/libc.a(lib_a-memcpy.o)
+                0x000000b4       0x66 /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a(libc_a-memcpy.o)
 
-.comment        0x0000000000000000       0x12
- .comment       0x0000000000000000       0x12 kernelboot.o
-                                         0x13 (size before relaxing)
- .comment       0x0000000000000012       0x13 /opt/riscv32im/lib/gcc/riscv32-unknown-elf/11.1.0/../../../../riscv32-unknown-elf/lib/libc.a(lib_a-memcpy.o)
+.comment        0x00000000       0x2f
+ .comment       0x00000000       0x2f kernelboot.o
+                                 0x30 (size before relaxing)
+ .comment       0x0000002f       0x30 /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a(libc_a-memcpy.o)
+
+.note.GNU-stack
+                0x00000000        0x0
+ .note.GNU-stack
+                0x00000000        0x0 kernelboot.o
+ .note.GNU-stack
+                0x00000000        0x0 /home/uri/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20241119/riscv32-esp-elf/bin/../lib/gcc/riscv32-esp-elf/14.2.0/../../../../riscv32-esp-elf/lib/libc.a(libc_a-memcpy.o)

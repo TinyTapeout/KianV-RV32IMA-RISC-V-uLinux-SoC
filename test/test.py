@@ -2,7 +2,7 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import ClockCycles
 from cocotbext.uart import UartSource, UartSink
-from cocotb.triggers import RisingEdge, FallingEdge
+from cocotb.triggers import RisingEdge, FallingEdge, Edge
 from cocotb.binary import BinaryValue
 import logging
 
@@ -53,6 +53,7 @@ def spi_slave(dut, clock, cs, mosi, miso):
 @cocotb.test()
 async def test_uart(dut):
     dut._log.info("start")
+    dut.test_sel = 0
     clock = Clock(dut.clk, 100, units="ns")
     cocotb.start_soon(clock.start())
     spi_task = cocotb.start_soon(
@@ -88,3 +89,20 @@ async def test_uart(dut):
     data = uart_sink.read_nowait(2)
     dut._log.info(f"UART Data: {data}")
     assert data == b"qa"
+
+@cocotb.test()
+async def test_gpio(dut):
+    dut._log.info("start")
+    dut.test_sel = 1
+    clock = Clock(dut.clk, 100, units="ns")
+    cocotb.start_soon(clock.start())
+    dut.rst_n.value = 0
+    await ClockCycles(dut.clk, 10)
+    dut.rst_n.value = 1
+
+    # Wait for the test firmware to start
+    await RisingEdge(dut.uo_out7)
+    for expected_val in [0x80, 0x00, 0x85, 0x12, 0x94, 0x17]:
+        dut._log.info(f"GPIO Data: {int(dut.uo_out.value):#X} (expected {expected_val:#X})")
+        assert dut.uo_out.value == expected_val
+        await Edge(dut.uo_out7)
