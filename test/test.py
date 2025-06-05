@@ -39,7 +39,9 @@ def spi_slave(dut, clock, cs, mosi, miso):
     for bit_index in range(32):
         yield RisingEdge(clock)
         out_buff = BinaryValue(
-            value=(out_buff.value << 1) | mosi.value.integer, n_bits=32, bigEndian=False
+            value=(out_buff.integer << 1) | mosi.value.integer,
+            n_bits=32,
+            bigEndian=False,
         )
         spi_log(dut, f"Read bit {mosi.value.integer}, buffer now {out_buff.binstr}")
 
@@ -53,7 +55,7 @@ def spi_slave(dut, clock, cs, mosi, miso):
 @cocotb.test()
 async def test_uart(dut):
     dut._log.info("start")
-    dut.test_sel = 0
+    dut.test_sel.value = 0
     clock = Clock(dut.clk, 100, units="ns")
     cocotb.start_soon(clock.start())
     spi_task = cocotb.start_soon(
@@ -90,10 +92,11 @@ async def test_uart(dut):
     dut._log.info(f"UART Data: {data}")
     assert data == b"qa"
 
+
 @cocotb.test()
 async def test_gpio(dut):
     dut._log.info("start")
-    dut.test_sel = 1
+    dut.test_sel.value = 1
     clock = Clock(dut.clk, 100, units="ns")
     cocotb.start_soon(clock.start())
     dut.rst_n.value = 0
@@ -103,6 +106,8 @@ async def test_gpio(dut):
     # Wait for the test firmware to start
     await RisingEdge(dut.uo_out7)
     for expected_val in [0x80, 0x00, 0x85, 0x12, 0x94, 0x17]:
-        dut._log.info(f"GPIO Data: {int(dut.uo_out.value):#X} (expected {expected_val:#X})")
+        dut._log.info(
+            f"GPIO Data: {dut.uo_out.value.integer:#X} (expected {expected_val:#X})"
+        )
         assert dut.uo_out.value == expected_val
         await Edge(dut.uo_out7)
