@@ -62,6 +62,7 @@ module tb ();
 
   wire spi_ce0 = uio_out[0];
   wire spi_ce1 = uio_out[6];
+  wire spi_ce2 = uio_out[7];
 
   wire spi_io3 = uio_oe[5] ? uio_out[5] : 'z;
   wire spi_io2 = uio_oe[4] ? uio_out[4] : 'z;
@@ -83,6 +84,12 @@ module tb ();
 
   psram psram_I (
       .ce_n(spi_ce1),
+      .sck (spi_psram_clk),
+      .dio ({spi_io3, spi_io2, spi_io1, spi_io0})
+  );
+
+  psram psram_I2 (
+      .ce_n(spi_ce2),
       .sck (spi_psram_clk),
       .dio ({spi_io3, spi_io2, spi_io1, spi_io0})
   );
