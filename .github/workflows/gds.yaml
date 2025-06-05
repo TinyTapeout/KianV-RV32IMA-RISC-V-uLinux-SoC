@@ -6,30 +6,28 @@ on:
 
 jobs:
   gds:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: checkout repo
         uses: actions/checkout@v4
         with:
           submodules: recursive
 
-      # The orginal action commented out
-      #- name: Build GDS
-      #  uses: TinyTapeout/tt-gds-action@tt06
-
       - name: Build GDS
-        uses: MichaelBell/tt-gds-action@tt06-no-pin-swaps
-  
+        uses: TinyTapeout/tt-gds-action@tt10
+        with:
+          flow: openlane2
+
   precheck:
     needs: gds
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Run Tiny Tapeout Precheck
-        uses: TinyTapeout/tt-gds-action/precheck@tt06
+        uses: TinyTapeout/tt-gds-action/precheck@tt10
 
   gl_test:
     needs: gds
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: checkout repo
         uses: actions/checkout@v4
@@ -37,13 +35,13 @@ jobs:
           submodules: recursive
 
       - name: GL test
-        uses: TinyTapeout/tt-gds-action/gl_test@tt06
+        uses: TinyTapeout/tt-gds-action/gl_test@tt10
 
   viewer:
     needs: gds
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       pages: write      # to deploy to Pages
       id-token: write   # to verify the deployment originates from an appropriate source
     steps:
-      - uses: TinyTapeout/tt-gds-action/viewer@tt06
+      - uses: TinyTapeout/tt-gds-action/viewer@tt10
