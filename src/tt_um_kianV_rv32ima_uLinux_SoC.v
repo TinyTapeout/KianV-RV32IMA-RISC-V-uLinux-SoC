@@ -35,24 +35,24 @@ module tt_um_kianV_rv32ima_uLinux_SoC (
   wire sclk;
 
   wire clk_osc = clk;
+  wire [7:0] soc_uo_out;
+  wire [7:0] gpio_uo_out;
+  wire [7:0] gpio_uo_en;
 
-  assign uo_out[0] = spi_cen0;
-  assign uo_out[1] = spi_sclk0;
-  assign uo_out[2] = spi_sio0_si_mosi0;
-  assign uo_out[3] = led[0];
-  assign uo_out[4] = uart_tx;
-  assign uo_out[5] = led[1];
-  assign uo_out[6] = led[2];
-  assign uo_out[7] = led[3];
+  assign uo_out = (gpio_uo_out & gpio_uo_en) | (soc_uo_out & ~gpio_uo_en);
+
+  assign soc_uo_out[0] = spi_cen0;
+  assign soc_uo_out[1] = spi_sclk0;
+  assign soc_uo_out[2] = spi_sio0_si_mosi0;
+  assign soc_uo_out[3] = led[0];
+  assign soc_uo_out[4] = uart_tx;
+  assign soc_uo_out[5] = led[1];
+  assign soc_uo_out[6] = led[2];
+  assign soc_uo_out[7] = led[3];
 
   assign uart_rx = ui_in[3];
   assign spi_sio1_so_miso0 = ui_in[2];
 
-  /*
-  assign {sio3_i, sio2_i, sio1_so_miso_i, sio0_si_mosi_i} = {
-    uio_in[5], uio_in[4], uio_in[2], uio_in[1]
-  };
-  */
   assign sio3_i = uio_in[5];
   assign sio2_i = uio_in[4];
   assign sio1_so_miso_i = uio_in[2];
@@ -83,6 +83,10 @@ module tt_um_kianV_rv32ima_uLinux_SoC (
       .spi_sclk0        (spi_sclk0),
       .spi_sio1_so_miso0(spi_sio1_so_miso0),
       .spi_sio0_si_mosi0(spi_sio0_si_mosi0),
+
+      .gpio_ui_in(ui_in),
+      .gpio_uo_out(gpio_uo_out),
+      .gpio_uo_en(gpio_uo_en),
 
       .sio_oe(sio_oe),
       .rst_n (rst_n)

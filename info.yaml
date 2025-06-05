@@ -17,6 +17,7 @@ project:
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
   source_files:
     - "spi.v"
+    - "gpio.v"
     - "divider.v"
     - "rx_uart.v"
     - "defines_soc.vh"
@@ -54,24 +55,24 @@ project:
 
 pinout:
   # Inputs
-  ui[0]: ""
-  ui[1]: ""
+  ui[0]: "gpio[0]"
+  ui[1]: "gpio[1]"
   ui[2]: "spi_sio1_so_miso0"
   ui[3]: "uart_rx"
-  ui[4]: ""
-  ui[5]: ""
-  ui[6]: ""
-  ui[7]: ""
+  ui[4]: "gpio[4]"
+  ui[5]: "gpio[5]"
+  ui[6]: "gpio[6]"
+  ui[7]: "gpio[7]"
 
   # Outputs
   uo[0]: "spi_cen0"
   uo[1]: "spi_sclk0"
   uo[2]: "spi_sio0_si_mosi0"
-  uo[3]: "led[0]"
+  uo[3]: "gpio[3]"
   uo[4]: "uart_tx"
-  uo[5]: "led[1]"
-  uo[6]: "led[2]"
-  uo[7]: "led[3]"
+  uo[5]: "gpio[5]"
+  uo[6]: "gpio[6]"
+  uo[7]: "gpio[7]"
 
   # Bidirectional pins
   uio[0]: "ce0 flash"
