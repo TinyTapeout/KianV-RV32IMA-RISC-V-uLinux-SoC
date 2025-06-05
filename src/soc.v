@@ -43,9 +43,9 @@ module soc (
     input  wire spi_sio1_so_miso0,
     output wire spi_sio0_si_mosi0,
 
-    output wire [7:0] gpio_uo_out,
     input wire [7:0] gpio_ui_in,
-    input wire [7:0] gpio_uo_en,
+    output wire [7:0] gpio_uo_out,
+    output wire [7:0] gpio_uo_en,
 
     output wire [3:0] sio_oe,
 
