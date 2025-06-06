@@ -13,7 +13,7 @@
 
   "//": "PL_TARGET_DENSITY_PCT - You can increase this if Global Placement fails with error GPL-0302.",
   "//": "Users have reported that values up to 80 worked well for them.",
-  "PL_TARGET_DENSITY_PCT": 53,
+  "PL_TARGET_DENSITY_PCT": 60,
 
   "//": "CLOCK_PERIOD - Increase this in case you are getting setup time violations.",
   "//": "The value is in nanoseconds, so 20ns == 50MHz.",
@@ -41,6 +41,9 @@
   "RUN_KLAYOUT_XOR": 0,
   "RUN_KLAYOUT_DRC": 0,
 
+  "//": "Exclude standard cells with issues",
+  "EXTRA_EXCLUDED_CELLS": ["sg13g2_sdfbbp_1"],
+
   "//": "Don't put clock buffers on the outputs",
   "DESIGN_REPAIR_BUFFER_OUTPUT_PORTS": 0,
 
@@ -63,9 +66,9 @@
   "//": "Clock",
   "RUN_CTS": 1,
 
-  "//": "Don't use power rings or met5 layer",
+  "//": "Don't use power rings or TopMetal layers",
   "FP_PDN_MULTILAYER": 0,
-  "RT_MAX_LAYER": "met4",
+  "RT_MAX_LAYER": "Metal5",
 
   "//": "MAGIC_DEF_LABELS may cause issues with LVS",
   "MAGIC_DEF_LABELS": 0,
