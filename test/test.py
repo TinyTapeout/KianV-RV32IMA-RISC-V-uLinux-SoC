@@ -1,9 +1,9 @@
 import cocotb
 from cocotb.clock import Clock
+from cocotb.types import LogicArray
 from cocotb.triggers import ClockCycles
 from cocotbext.uart import UartSource, UartSink
-from cocotb.triggers import RisingEdge, FallingEdge, Edge
-from cocotb.binary import BinaryValue
+from cocotb.triggers import RisingEdge, FallingEdge
 import logging
 
 logging.basicConfig(level=logging.DEBUG)
@@ -24,29 +24,23 @@ def spi_log(dut, message, level="info"):
         dut._log.info(full_message)
 
 
-@cocotb.coroutine
-def spi_slave(dut, clock, cs, mosi, miso):
+async def spi_slave(dut, clock, cs, mosi, miso):
     """A simple SPI slave coroutine using a dedicated logger."""
     spi_log(dut, "SPI Slave coroutine started.")
     miso.value = 0
 
-    out_buff = BinaryValue(n_bits=8, bigEndian=False)
-    out_buff.binstr = "0" * 8
+    out_buff = LogicArray("0" * 32)
 
-    yield FallingEdge(cs)
+    await FallingEdge(cs)
     spi_log(dut, "CS is low, SPI transaction started.")
 
     for bit_index in range(32):
-        yield RisingEdge(clock)
-        out_buff = BinaryValue(
-            value=(out_buff.integer << 1) | mosi.value.integer,
-            n_bits=32,
-            bigEndian=False,
-        )
-        spi_log(dut, f"Read bit {mosi.value.integer}, buffer now {out_buff.binstr}")
+        await RisingEdge(clock)
+        out_buff[bit_index] = mosi.value
+        spi_log(dut, f"Read bit {str(mosi.value)}, buffer now {str(out_buff)}")
 
-        yield FallingEdge(clock)
-        miso.value = int(out_buff.binstr[-1])
+        await FallingEdge(clock)
+        miso.value = mosi.value
 
     assert out_buff.value == 0xDEADBEAF, f"Expected 0xdeadbeaf, got {out_buff.value:#X}"
     spi_log(dut, "Received expected value: 0xdeadbeaf")
@@ -56,7 +50,7 @@ def spi_slave(dut, clock, cs, mosi, miso):
 async def test_uart(dut):
     dut._log.info("start")
     dut.test_sel.value = 0
-    clock = Clock(dut.clk, 100, units="ns")
+    clock = Clock(dut.clk, 100, unit="ns")
     cocotb.start_soon(clock.start())
     spi_task = cocotb.start_soon(
         spi_slave(
@@ -97,7 +91,7 @@ async def test_uart(dut):
 async def test_gpio(dut):
     dut._log.info("start")
     dut.test_sel.value = 1
-    clock = Clock(dut.clk, 100, units="ns")
+    clock = Clock(dut.clk, 100, unit="ns")
     cocotb.start_soon(clock.start())
     dut.rst_n.value = 0
     await ClockCycles(dut.clk, 10)
@@ -107,7 +101,7 @@ async def test_gpio(dut):
     await RisingEdge(dut.uo_out7)
     for expected_val in [0x80, 0x00, 0x85, 0x12, 0x94, 0x17]:
         dut._log.info(
-            f"GPIO Data: {dut.uo_out.value.integer:#X} (expected {expected_val:#X})"
+            f"GPIO Data: {dut.uo_out.value.to_unsigned():#X} (expected {expected_val:#X})"
         )
         assert dut.uo_out.value == expected_val
-        await Edge(dut.uo_out7)
+        await dut.uo_out7.value_change
