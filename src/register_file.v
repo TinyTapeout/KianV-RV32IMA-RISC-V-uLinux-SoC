@@ -31,17 +31,23 @@ module register_file #(
     output wire [31:0] rd1,
     output wire [31:0] rd2
 );
-  reg [31:0] bank0[0:REGISTER_DEPTH -1];
 
-  always @(posedge clk) begin
+  wire [31:0] ra_data;
+  wire [31:0] rb_data;
 
-    if (we && A3 != 0) begin
-      bank0[A3] <= wd;
-    end
-  end
+  rf_top tnt_regfile (
+    .w_data(wd),
+    .w_addr(A3),
+    .w_ena(we),
+    .ra_addr(A1),
+    .rb_addr(A2),
+    .ra_data(ra_data),
+    .rb_data(rb_data),
+    .clk(clk)
+  );
 
-  assign rd1 = A1 != 0 ? bank0[A1] : 32'b0;
-  assign rd2 = A2 != 0 ? bank0[A2] : 32'b0;
+  assign rd1 = A1 != 0 ? ra_data : 32'b0;
+  assign rd2 = A2 != 0 ? rb_data : 32'b0;
 
 endmodule
 /* verilator lint_off UNUSEDSIGNAL */

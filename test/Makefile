@@ -30,6 +30,7 @@ VERILOG_SOURCES += $(PROJ)/csr_decoder.v
 VERILOG_SOURCES += $(PROJ)/misa.vh
 VERILOG_SOURCES += $(PROJ)/alu_decoder.v
 VERILOG_SOURCES += $(PROJ)/register_file.v
+VERILOG_SOURCES += $(PROJ)/rf_top.v
 VERILOG_SOURCES += $(PROJ)/design_elements.v
 VERILOG_SOURCES += $(PROJ)/riscv_defines.vh
 VERILOG_SOURCES += $(PROJ)/main_fsm.v

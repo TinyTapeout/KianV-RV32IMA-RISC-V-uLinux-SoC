@@ -41,6 +41,7 @@ project:
     - "csr_decoder.v"
     - "clint.v"
     - "register_file.v"
+    - "rf_top.v"
     - "misa.vh"
     - "tx_uart.v"
     - "tt_um_kianV_rv32ima_uLinux_SoC.v"

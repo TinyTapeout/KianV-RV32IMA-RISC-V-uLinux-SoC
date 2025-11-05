@@ -1,0 +1,291 @@
+library (sky130_s47_lib) {
+  delay_model : "table_lookup";
+  library_features : "report_delay_calculation";
+  voltage_unit : "1V";
+  current_unit : "1mA";
+  resistance_unit : "1ohm";
+  capacitive_load_unit (1, fF);
+  input_threshold_pct_rise : 50;
+  input_threshold_pct_fall : 50;
+  output_threshold_pct_rise : 50;
+  output_threshold_pct_fall : 50;
+  slew_lower_threshold_pct_rise : 10;
+  slew_lower_threshold_pct_fall : 10;
+  slew_upper_threshold_pct_rise : 90;
+  slew_upper_threshold_pct_fall : 90;
+  slew_derate_from_library : 1.0;
+  default_cell_leakage_power : 0.0;
+  default_leakage_power_density : 0.0;
+  default_input_pin_cap : 1.0;
+  default_inout_pin_cap : 1.0;
+  default_output_pin_cap : 0.0;
+  default_max_transition : 0.5;
+  default_fanout_load : 1.0;
+  default_max_fanout : 4.0;
+  default_connection_class : "universal";
+  nom_process : 1.0;
+  nom_temperature : 25.0;
+  nom_voltage : 1.8;
+  voltage_map ("VPWR", 1.8);
+  voltage_map ("VGND", 0.0);
+  type (addr_bus) {
+    base_type : "array";
+    data_type : "bit";
+    bit_width : 5;
+    bit_from : 4;
+    bit_to : 0;
+    downto : true;
+  }
+  type (data_bus) {
+    base_type : "array";
+    data_type : "bit";
+    bit_width : 32;
+    bit_from : 31;
+    bit_to : 0;
+    downto : true;
+  }
+  cell (rf_top) {
+    dont_touch : true;
+    dont_use : true;
+    map_only : true;
+    interface_timing : true;
+    memory () {
+      type : "sram";
+      address_width : 5;
+      word_width : 32;
+    }
+    pg_pin (VPWR) {
+      voltage_name : "VPWR";
+      pg_type : "primary_power";
+    }
+    pg_pin (VGND) {
+      voltage_name : "VGND";
+      pg_type : "primary_ground";
+    }
+    bus (w_addr) {
+      bus_type : "addr_bus";
+      direction : "input";
+      capacitance : 2.0;
+      max_transition : 0.1;
+      timing () {
+        related_pin : "clk";
+        timing_type : "setup_rising";
+        rise_constraint (scalar) {
+          values ("2.0");
+        }
+        fall_constraint (scalar) {
+          values ("2.0");
+        }
+      }
+      timing () {
+        related_pin : "clk";
+        timing_type : "hold_rising";
+        rise_constraint (scalar) {
+          values ("0.2");
+        }
+        fall_constraint (scalar) {
+          values ("0.2");
+        }
+      }
+    }
+    bus (ra_addr) {
+      bus_type : "addr_bus";
+      direction : "input";
+      capacitance : 2.0;
+      max_transition : 0.1;
+      timing () {
+        related_pin : "clk";
+        timing_type : "setup_rising";
+        rise_constraint (scalar) {
+          values ("2.0");
+        }
+        fall_constraint (scalar) {
+          values ("2.0");
+        }
+      }
+      timing () {
+        related_pin : "clk";
+        timing_type : "hold_rising";
+        rise_constraint (scalar) {
+          values ("0.2");
+        }
+        fall_constraint (scalar) {
+          values ("0.2");
+        }
+      }
+    }
+    bus (rb_addr) {
+      bus_type : "addr_bus";
+      direction : "input";
+      capacitance : 2.0;
+      max_transition : 0.1;
+      timing () {
+        related_pin : "clk";
+        timing_type : "setup_rising";
+        rise_constraint (scalar) {
+          values ("2.0");
+        }
+        fall_constraint (scalar) {
+          values ("2.0");
+        }
+      }
+      timing () {
+        related_pin : "clk";
+        timing_type : "hold_rising";
+        rise_constraint (scalar) {
+          values ("0.2");
+        }
+        fall_constraint (scalar) {
+          values ("0.2");
+        }
+      }
+    }
+    bus (w_data) {
+      bus_type : "data_bus";
+      direction : "input";
+      memory_write () {
+        address : "w_addr";
+        clocked_on : "clk";
+      }
+      timing () {
+        related_pin : "clk";
+        timing_type : "setup_rising";
+        rise_constraint (scalar) {
+          values ("2.0");
+        }
+        fall_constraint (scalar) {
+          values ("2.0");
+        }
+      }
+      timing () {
+        related_pin : "clk";
+        timing_type : "hold_rising";
+        rise_constraint (scalar) {
+          values ("0.2");
+        }
+        fall_constraint (scalar) {
+          values ("0.2");
+        }
+      }
+    }
+    bus (ra_data) {
+      bus_type : "data_bus";
+      direction : "output";
+      memory_read () {
+        address : "ra_addr";
+        clocked_on : "clk";
+      }
+      timing () {
+        related_pin : "clk";
+        timing_type : "rising_edge";
+        timing_sense : "non_unate";
+        cell_rise (scalar) {
+          values ("4.0");
+        }
+        cell_fall (scalar) {
+          values ("4.0");
+        }
+        rise_transition (scalar) {
+          values ("0.25");
+        }
+        fall_transition (scalar) {
+          values ("0.25");
+        }
+      }
+    }
+    bus (rb_data) {
+      bus_type : "data_bus";
+      direction : "output";
+      memory_read () {
+        address : "rb_addr";
+        clocked_on : "clk";
+      }
+      timing () {
+        related_pin : "clk";
+        timing_type : "rising_edge";
+        timing_sense : "non_unate";
+        cell_rise (scalar) {
+          values ("4.0");
+        }
+        cell_fall (scalar) {
+          values ("4.0");
+        }
+        rise_transition (scalar) {
+          values ("0.25");
+        }
+        fall_transition (scalar) {
+          values ("0.25");
+        }
+      }
+    }
+    pin (w_ena) {
+      direction : "input";
+      capacitance : 2.0;
+      max_transition : 0.1;
+      timing () {
+        related_pin : "clk";
+        timing_type : "setup_rising";
+        rise_constraint (scalar) {
+          values ("2.0");
+        }
+        fall_constraint (scalar) {
+          values ("2.0");
+        }
+      }
+      timing () {
+        related_pin : "clk";
+        timing_type : "hold_rising";
+        rise_constraint (scalar) {
+          values ("0.2");
+        }
+        fall_constraint (scalar) {
+          values ("0.2");
+        }
+      }
+    }
+    pin (clk) {
+      clock : true;
+      direction : "input";
+      capacitance : 2.0;
+      max_transition : 0.1;
+      timing () {
+        timing_type : "min_pulse_width";
+        rise_constraint (scalar) {
+          values ("5.0");
+        }
+        fall_constraint (scalar) {
+          values ("5.0");
+        }
+      }
+      timing () {
+        timing_type : "minimum_period";
+        rise_constraint (scalar) {
+          values ("10.0");
+        }
+        fall_constraint (scalar) {
+          values ("10.0");
+        }
+      }
+      timing () {
+        timing_sense : "positive_unate";
+        timing_type : "min_clock_tree_path";
+        cell_rise (scalar) {
+          values ("0.2");
+        }
+        cell_fall (scalar) {
+          values ("0.2");
+        }
+      }
+      timing () {
+        timing_sense : "negative_unate";
+        timing_type : "min_clock_tree_path";
+        cell_rise (scalar) {
+          values ("0.2");
+        }
+        cell_fall (scalar) {
+          values ("0.2");
+        }
+      }
+    }
+  }
+}

@@ -13,7 +13,7 @@
 
   "//": "PL_TARGET_DENSITY_PCT - You can increase this if Global Placement fails with error GPL-0302.",
   "//": "Users have reported that values up to 80 worked well for them.",
-  "PL_TARGET_DENSITY_PCT": 55,
+  "PL_TARGET_DENSITY_PCT": 41,
 
   "//": "CLOCK_PERIOD - Increase this in case you are getting setup time violations.",
   "//": "The value is in nanoseconds, so 20ns == 50MHz.",
@@ -30,6 +30,30 @@
   "//": "If you need a custom clock configuration, read the following documentation first:",
   "//": "https://tinytapeout.com/faq/#how-can-i-map-an-additional-external-clock-to-one-of-the-gpios",
   "CLOCK_PORT": "clk",
+
+
+    "//": "Macro",
+  "MACROS": {
+    "rf_top": {
+      "instances": {
+        "soc_I.kianv_I.datapath_unit_I.register_file_I.tnt_regfile": {
+          "location": [3, 45.0],
+          "orientation": "E"
+        }
+      },
+      "gds": ["dir::../regfile_macro/rf_top.gds.gz"],
+      "lef": ["dir::../regfile_macro/rf_top.lef"],
+      "lib": {
+        "*": ["dir::../regfile_macro/rf_top.lib"]
+      }
+    }
+  },
+
+  "PDN_MACRO_CONNECTIONS": [
+    "soc_I.kianv_I.datapath_unit_I.register_file_I.tnt_regfile VPWR VGND VDPWR VGND"
+  ],
+
+  "FP_PDN_HORIZONTAL_LAYER": "met3",
 
   "//": "Configuration docs: https://librelane.readthedocs.io/en/latest/reference/configuration.html",
 
