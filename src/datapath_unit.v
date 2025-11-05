@@ -253,17 +253,8 @@ module datapath_unit #(
       mem_addr_align_latch
   );
 
-  dlatch #(32) A1_I (
-      clk,
-      Rd1,
-      A1
-  );
-
-  dlatch #(32) A2_I (
-      clk,
-      Rd2,
-      A2
-  );
+  assign A1 = Rd1;
+  assign A2 = Rd2;
 
   // todo: data, csrdata, mulex could be stored in one dlatch
   dlatch #(32) Data_I (
