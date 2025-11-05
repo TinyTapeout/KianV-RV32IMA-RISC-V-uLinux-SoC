@@ -79,6 +79,7 @@ module main_fsm (
 );
   // S0  --> Fetch
   // S1  --> Decode
+  // S1a --> RegFileWait (wait for registered regfile outputs)
   // S2  --> MemAddr
   // S3  --> MemRead
   // S4  --> MemWb
@@ -122,14 +123,14 @@ module main_fsm (
   wire funct7b0 = funct7[0];  // r-type
   wire [4:0] funct5 = funct7[6:2];
 
-  localparam    S0 = 0, S1 = 1, S2 = 2, S3 = 3, S4 = 4, S5 = 5,
-                  S6 = 6, S7 = 7, S8 = 8, S9 = 9, S10 = 10, S11 = 11,
-                  S12 = 12, S13 = 13, S14 = 14, S15 = 15, S16 = 16, S17 = 17,
-                  S18 = 18, S19 = 19, S20 = 20, S21 = 21, S22 = 22, S23 = 23,
-                  S24 = 24, S25 = 25, S26 = 26, S27 = 27, S28 = 28, S29 = 29,
-                  S30 = 30, S31 = 31, S32 = 32, S33 = 33, S34 = 34, S35 = 35, S36 = 36,
-                  S37 = 37, S38 = 38, S39 = 39, S40 = 40, S41 = 41, S42 = 42, S43 = 43,
-                  S44 = 44, S45 = 45, S46 = 46, S47 = 47, S48 = 48, S49 = 49, S_LAST = 50; // fixme
+  localparam    S0 = 0, S1 = 1, S1a = 2, S2 = 3, S3 = 4, S4 = 5, S5 = 6,
+                  S6 = 7, S7 = 8, S8 = 9, S9 = 10, S10 = 11, S11 = 12,
+                  S12 = 13, S13 = 14, S14 = 15, S15 = 16, S16 = 17, S17 = 18,
+                  S18 = 19, S19 = 20, S20 = 21, S21 = 22, S22 = 23, S23 = 24,
+                  S24 = 25, S25 = 26, S26 = 27, S27 = 28, S28 = 29, S29 = 30,
+                  S30 = 31, S31 = 32, S32 = 33, S33 = 34, S34 = 35, S35 = 36, S36 = 37,
+                  S37 = 38, S38 = 39, S39 = 40, S40 = 41, S41 = 42, S42 = 43, S43 = 44,
+                  S44 = 45, S45 = 46, S46 = 47, S47 = 48, S48 = 49, S49 = 50, S_LAST = 51; // fixme
 
   reg [$clog2(S_LAST) -1:0] state, next_state;
 
@@ -231,7 +232,8 @@ module main_fsm (
     next_state = S0;
     case (state)
       S0:  next_state = mem_ready ? S1 : S0;  // fetch
-      S1:  // decode
+      S1:  next_state = S1a;  // decode - always wait for register file
+      S1a:  // register file wait - instruction decode happens here
             begin
         if (mtip_raised || msip_raised) next_state = S36;  //interrupt
         else if (is_load || is_store) next_state = S2;
@@ -401,6 +403,14 @@ module main_fsm (
       S1: begin
         // decode
         // ALUOut <- PCTarget (oldPC + imm)
+        ALUSrcA = `SRCA_OLD_PC;
+        ALUSrcB = `SRCB_IMM_EXT;
+        ALUOp   = `ALU_OP_ADD;
+      end
+      S1a: begin
+        // register file wait
+        // Wait one cycle for register file outputs to be valid
+        // Register values will be latched into A1/A2 at end of this cycle
         ALUSrcA = `SRCA_OLD_PC;
         ALUSrcB = `SRCB_IMM_EXT;
         ALUOp   = `ALU_OP_ADD;
