@@ -3,63 +3,58 @@
 
 # defaults
 SIM ?= icarus
-#SIM_ARGS=-fst
-#SIM ?= verilator
+WAVES ?= 1
 TOPLEVEL_LANG ?= verilog
-PROJ = $(PWD)/../src
+SRC_DIR = $(PWD)/../src
+PROJECT_SOURCES = tt_um_kianV_rv32ima_uLinux_SoC.v 
+PROJECT_SOURCES += tx_uart.v
+PROJECT_SOURCES += clint.v
+PROJECT_SOURCES += spi.v
+PROJECT_SOURCES += gpio.v
+PROJECT_SOURCES += rx_uart.v
+PROJECT_SOURCES += qqspi.v
+PROJECT_SOURCES += soc.v
+PROJECT_SOURCES += fifo.v
+PROJECT_SOURCES += riscv_defines.vh
+PROJECT_SOURCES += csr_decoder.v
+PROJECT_SOURCES += misa.vh
+PROJECT_SOURCES += alu_decoder.v
+PROJECT_SOURCES += register_file.v
+PROJECT_SOURCES += design_elements.v
+PROJECT_SOURCES += riscv_defines.vh
+PROJECT_SOURCES += main_fsm.v
+PROJECT_SOURCES += csr_exception_handler.v
+PROJECT_SOURCES += control_unit.v
+PROJECT_SOURCES += store_decoder.v
+PROJECT_SOURCES += datapath_unit.v
+PROJECT_SOURCES += csr_utilities.vh
+PROJECT_SOURCES += riscv_priv_csr_status.vh
+PROJECT_SOURCES += load_decoder.v
+PROJECT_SOURCES += extend.v
+PROJECT_SOURCES += rv32_amo_opcodes.vh
+PROJECT_SOURCES += load_alignment.v
+PROJECT_SOURCES += mcause.vh
+PROJECT_SOURCES += kianv_harris_mc_edition.v
+PROJECT_SOURCES += alu.v
+PROJECT_SOURCES += store_alignment.v
+PROJECT_SOURCES += defines_soc.vh
+PROJECT_SOURCES += divider.v
+PROJECT_SOURCES += divider_decoder.v
+PROJECT_SOURCES += multiplier.v
+PROJECT_SOURCES += multiplier_decoder.v
+PROJECT_SOURCES += multiplier_extension_decoder.v
 
-VERILOG_SOURCES += $(PWD)/tb.v
-VERILOG_SOURCES += $(PWD)/spiflash.v
-VERILOG_SOURCES += $(PWD)/psram.v
 
-# normal simulation
 ifneq ($(GATES),yes)
 
-# this is the only part you should need to modify:
-VERILOG_SOURCES += $(PROJ)/tt_um_kianV_rv32ima_uLinux_SoC.v # $(PROJ)/decoder.v
-VERILOG_SOURCES += $(PROJ)/tx_uart.v
-VERILOG_SOURCES += $(PROJ)/clint.v
-VERILOG_SOURCES += $(PROJ)/spi.v
-VERILOG_SOURCES += $(PROJ)/gpio.v
-VERILOG_SOURCES += $(PROJ)/rx_uart.v
-VERILOG_SOURCES += $(PROJ)/qqspi.v
-VERILOG_SOURCES += $(PROJ)/soc.v
-VERILOG_SOURCES += $(PROJ)/fifo.v
-VERILOG_SOURCES += $(PROJ)/riscv_defines.vh
-VERILOG_SOURCES += $(PROJ)/csr_decoder.v
-VERILOG_SOURCES += $(PROJ)/misa.vh
-VERILOG_SOURCES += $(PROJ)/alu_decoder.v
-VERILOG_SOURCES += $(PROJ)/register_file.v
-VERILOG_SOURCES += $(PROJ)/design_elements.v
-VERILOG_SOURCES += $(PROJ)/riscv_defines.vh
-VERILOG_SOURCES += $(PROJ)/main_fsm.v
-VERILOG_SOURCES += $(PROJ)/csr_exception_handler.v
-VERILOG_SOURCES += $(PROJ)/control_unit.v
-VERILOG_SOURCES += $(PROJ)/store_decoder.v
-VERILOG_SOURCES += $(PROJ)/datapath_unit.v
-VERILOG_SOURCES += $(PROJ)/csr_utilities.vh
-VERILOG_SOURCES += $(PROJ)/riscv_priv_csr_status.vh
-VERILOG_SOURCES += $(PROJ)/load_decoder.v
-VERILOG_SOURCES += $(PROJ)/extend.v
-VERILOG_SOURCES += $(PROJ)/rv32_amo_opcodes.vh
-VERILOG_SOURCES += $(PROJ)/load_alignment.v
-VERILOG_SOURCES += $(PROJ)/mcause.vh
-VERILOG_SOURCES += $(PROJ)/kianv_harris_mc_edition.v
-VERILOG_SOURCES += $(PROJ)/alu.v
-VERILOG_SOURCES += $(PROJ)/store_alignment.v
-VERILOG_SOURCES += $(PROJ)/defines_soc.vh
-
-VERILOG_SOURCES += $(PROJ)/divider.v
-VERILOG_SOURCES += $(PROJ)/divider_decoder.v
-VERILOG_SOURCES += $(PROJ)/multiplier.v
-VERILOG_SOURCES += $(PROJ)/multiplier_decoder.v
-VERILOG_SOURCES += $(PROJ)/multiplier_extension_decoder.v
-
-COMPILE_ARGS    += -I$(PROJ)
+# RTL simulation:
+SIM_BUILD				= sim_build/rtl
+VERILOG_SOURCES += $(addprefix $(SRC_DIR)/,$(PROJECT_SOURCES))
 
 else
 
-# gate level simulation requires some extra setup, you shouldn't need to touch this
+# Gate level simulation:
+SIM_BUILD				= sim_build/gl
 COMPILE_ARGS    += -DGL_TEST
 COMPILE_ARGS    += -DFUNCTIONAL
 COMPILE_ARGS    += -DUSE_POWER_PINS
@@ -70,9 +65,16 @@ VERILOG_SOURCES += $(PDK_ROOT)/gf180mcuD/libs.ref/gf180mcu_fd_sc_mcu7t5v0/verilo
 
 # this gets copied in by the GDS action workflow
 VERILOG_SOURCES += $(PWD)/gate_level_netlist.v
+
 endif
 
-# TOPLEVEL is the name of the toplevel module in your Verilog or VHDL file
+# Allow sharing configuration between design and testbench via `include`:
+COMPILE_ARGS 		+= -I$(SRC_DIR)
+
+# Include the testbench sources:
+VERILOG_SOURCES += $(PWD)/spiflash.v
+VERILOG_SOURCES += $(PWD)/psram.v
+VERILOG_SOURCES += $(PWD)/tb.v
 TOPLEVEL = tb
 
 # List test modules to run, separated by commas and without the .py suffix:
