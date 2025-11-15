@@ -116,6 +116,7 @@ module qqspi #(
       xfer_cycles <= 0;
       ready <= 0;
       state <= S0_IDLE;
+      rdata <= 0;
     end else begin
       state <= next_state;
       ce <= ce_next;
