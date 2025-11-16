@@ -78,6 +78,7 @@ module rx_uart (
       ready <= 1'b0;
       error <= 1'b0;
       wait_states <= 1;
+      return_state <= 3'b0;
 
       bit_idx <= 0;
       rx_data <= 0;
