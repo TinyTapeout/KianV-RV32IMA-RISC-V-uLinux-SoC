@@ -12,7 +12,14 @@ that can be driven / tested by the cocotb test.py
 // testbench is controlled by test.py
 module tb ();
 
-  // wire up the inputs and outputs
+  // Dump the signals to a FST file. You can view it with gtkwave or surfer.
+  initial begin
+    $dumpfile("tb.fst");
+    $dumpvars(0, tb);
+    #1;
+  end
+
+  // Wire up the inputs and outputs:
   reg clk;
   reg rst_n;
   reg ena;
@@ -93,12 +100,6 @@ module tb ();
       .sck (spi_psram_clk),
       .dio ({spi_io3, spi_io2, spi_io1, spi_io0})
   );
-
-  // this part dumps the trace to a vcd file that can be viewed with GTKWave
-  initial begin
-    $dumpfile("tb.vcd");
-    $dumpvars(0, tb);
-  end
 
 
 endmodule

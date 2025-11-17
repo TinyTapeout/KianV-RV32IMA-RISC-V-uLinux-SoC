@@ -2,7 +2,7 @@
 [*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
 [*] Mon Oct 23 10:31:32 2023
 [*]
-[dumpfile] "/home/uri/p/KianV_rv32ia_uLinux_SoC/test/tb.vcd"
+[dumpfile] "/home/uri/p/KianV_rv32ia_uLinux_SoC/test/tb.fst"
 [dumpfile_mtime] "Mon Oct 23 10:31:22 2023"
 [dumpfile_size] 8534938
 [savefile] "/home/uri/p/KianV_rv32ia_uLinux_SoC/test/tb.gtkw"
