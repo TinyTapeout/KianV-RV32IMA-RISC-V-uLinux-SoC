@@ -13,11 +13,12 @@
 
   "//": "PL_TARGET_DENSITY_PCT - You can increase this if Global Placement fails with error GPL-0302.",
   "//": "Users have reported that values up to 80 worked well for them.",
-  "PL_TARGET_DENSITY_PCT": 42,
+  "PL_TARGET_DENSITY_PCT": 44,
 
   "//": "CLOCK_PERIOD - Increase this in case you are getting setup time violations.",
   "//": "The value is in nanoseconds, so 50ns == 20MHz.",
   "CLOCK_PERIOD": 60,
+  "SYNTH_EXCLUDED_CELL_FILE": "dir::stdcells_exclude.txt",
 
   "//": "Hold slack margin - Increase them in case you are getting hold violations.",
   "PL_RESIZER_HOLD_SLACK_MARGIN": 0.1,
