@@ -57,7 +57,7 @@ Build the system image as described in the [kianRiscV repo](https://github.com/s
 | 0x180000     | `kianv.dtb`      | Device Tree Blob      |
 | 0x200000     | `Image`          | Linux kernel + rootfs |
 
-The system runs at 30 MHz, with a maximum tested speed of 34.5 MHz.
+The system runs at 16 MHz.
 
 ## External hardware
 
