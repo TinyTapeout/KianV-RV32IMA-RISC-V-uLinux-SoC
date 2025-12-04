@@ -15,6 +15,9 @@
   "//": "Users have reported that values up to 80 worked well for them.",
   "PL_TARGET_DENSITY_PCT": 43,
 
+  "//": "Fix antenna violations",
+  "DRT_ANTENNA_REPAIR_ITERS": 1,
+
   "//": "CLOCK_PERIOD - Increase this in case you are getting setup time violations.",
   "//": "The value is in nanoseconds, so 50ns == 20MHz.",
   "CLOCK_PERIOD": 60,
